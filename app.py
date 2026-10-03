@@ -23,95 +23,156 @@ st.set_page_config(
 # Custom Styling
 st.markdown("""
 <style>
-    /* Main Theme Overrides */
-    .stApp {
-        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
-        color: #f8fafc;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    :root {
+        --bg: #f3f7f1;
+        --panel: #ffffff;
+        --panel-alt: #eef7ee;
+        --soft-green: #dfeee0;
+        --forest: #2e7d5d;
+        --deep: #234f3c;
+        --sage: #8bbf9f;
+        --teal: #31a39a;
+        --amber: #d6a64d;
+        --muted: #5a6d67;
+        --text: #18332a;
+        --border: rgba(28, 58, 49, 0.12);
+        --shadow: rgba(38, 74, 59, 0.12);
     }
-    
-    /* Header Styling */
+
+    .stApp {
+        background: linear-gradient(180deg, #f7faf6 0%, #edf5ef 100%);
+        color: var(--text);
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+    }
+
     .main-title {
-        background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--deep);
         font-size: 2.8rem;
         font-weight: 800;
-        margin-bottom: 0.2rem;
-        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+        letter-spacing: -0.04em;
     }
+
     .sub-title {
-        color: #94a3b8;
-        font-size: 1.1rem;
+        color: var(--muted);
+        font-size: 1.08rem;
         margin-bottom: 1.5rem;
     }
 
-    /* Glassmorphism Metric Cards */
     .glass-card {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 1.25rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .glass-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(56, 189, 248, 0.4);
-    }
-    
-    .metric-value {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #38bdf8;
-        line-height: 1.2;
-    }
-    .metric-label {
-        font-size: 0.85rem;
-        color: #94a3b8;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 0.4rem;
-    }
-    
-    /* Sidebar Styling */
-    section[data-testid="stSidebar"] {
-        background: rgba(15, 23, 42, 0.95) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(238,247,238,0.96));
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 1.2rem 1.1rem;
+        box-shadow: 0 12px 28px var(--shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    /* Tab Design */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 12px;
-        background-color: rgba(15, 23, 42, 0.6);
-        padding: 8px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+    .glass-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(46, 125, 93, 0.25);
+        box-shadow: 0 16px 32px rgba(46, 125, 93, 0.12);
     }
+
+    .metric-value {
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: var(--forest);
+        line-height: 1.2;
+    }
+
+    .metric-label {
+        font-size: 0.78rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+    }
+
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #f8fbf8 0%, #edf5ed 100%) !important;
+        border-right: 1px solid var(--border);
+    }
+
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: rgba(255, 255, 255, 0.66);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 8px;
+    }
+
     .stTabs [data-baseweb="tab"] {
-        height: 48px;
+        height: 46px;
         white-space: pre;
-        border-radius: 8px;
-        color: #94a3b8;
-        font-weight: 600;
+        border-radius: 10px;
+        color: var(--muted);
+        font-weight: 700;
         transition: all 0.2s ease;
     }
+
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
-        color: #ffffff !important;
-        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        background: linear-gradient(135deg, #9ad5b6 0%, #5abf9a 100%) !important;
+        color: var(--deep) !important;
+        box-shadow: 0 8px 18px rgba(90, 191, 154, 0.2);
     }
-    
-    /* Custom Alerts */
+
     .info-box {
-        background: rgba(56, 189, 248, 0.1);
-        border-left: 4px solid #38bdf8;
+        background: linear-gradient(90deg, rgba(154, 213, 182, 0.16), rgba(49, 163, 154, 0.08));
+        border-left: 4px solid var(--forest);
         padding: 12px 16px;
-        border-radius: 4px 8px 8px 4px;
-        color: #e0f2fe;
+        border-radius: 12px;
+        color: var(--deep);
         margin-bottom: 1rem;
+    }
+
+    .stMultiSelect [data-baseweb="tag"],
+    .stMultiSelect [data-baseweb="pill"],
+    div[data-baseweb="select"] span[data-baseweb="tag"],
+    div[data-baseweb="select"] div[data-baseweb="pill"] {
+        background: linear-gradient(135deg, rgba(180, 221, 194, 0.92), rgba(110, 188, 146, 0.9)) !important;
+        border: 1px solid rgba(46, 125, 93, 0.22) !important;
+        color: var(--deep) !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        box-shadow: none !important;
+    }
+
+    .stMultiSelect [data-baseweb="tag"] *,
+    .stMultiSelect [data-baseweb="pill"] *,
+    div[data-baseweb="select"] span[data-baseweb="tag"] *,
+    div[data-baseweb="select"] div[data-baseweb="pill"] * {
+        color: var(--deep) !important;
+    }
+
+    .stSlider [data-testid="stBaseSlider"] > div > div > div > div {
+        background: linear-gradient(90deg, #9ad5b6 0%, #5abf9a 100%) !important;
+    }
+
+    .stSlider [data-testid="stBaseSlider"] [data-testid="stThumbValue"] {
+        background: #2e7d5d !important;
+        border: 2px solid #ffffff !important;
+    }
+
+    div.stButton > button,
+    div.stDownloadButton > button,
+    div.stFormSubmitButton > button,
+    button[kind="primary"] {
+        background: linear-gradient(135deg, #9ad5b6 0%, #5abf9a 100%) !important;
+        color: var(--deep) !important;
+        border: 1px solid rgba(46, 125, 93, 0.25) !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        box-shadow: 0 8px 18px rgba(90, 191, 154, 0.18) !important;
+    }
+
+    div.stButton > button:hover,
+    div.stDownloadButton > button:hover,
+    div.stFormSubmitButton > button:hover,
+    button[kind="primary"]:hover {
+        background: linear-gradient(135deg, #7ec9a0 0%, #4caf8d 100%) !important;
+        border-color: rgba(46, 125, 93, 0.35) !important;
+        color: var(--deep) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -119,6 +180,33 @@ st.markdown("""
 # ==========================================
 # HELPER FUNCTIONS & DATA LOADING
 # ==========================================
+@st.cache_data
+def clean_column_name(column_name):
+    text = str(column_name).strip()
+    text = text.replace("langlitude", "latitude").replace("lattitude", "latitude")
+    text = text.replace("longlattitude", "longitude").replace("longitud", "longitude")
+    text = text.replace("_", " ").replace("-", " ")
+    text = " ".join(text.split())
+    return text.title()
+
+
+@st.cache_data
+def drop_geo_columns(df):
+    if df is None:
+        return df
+    geo_aliases = (
+        "latitude", "longitude", "lat", "lon",
+        "langlitude", "lattitude", "longlattitude", "longitud"
+    )
+    cols_to_drop = [
+        col for col in df.columns
+        if any(alias in str(col).lower() for alias in geo_aliases)
+    ]
+    if cols_to_drop:
+        df = df.drop(columns=cols_to_drop)
+    return df
+
+
 @st.cache_data
 def load_data(uploaded_file, default_path="sample_data.csv"):
     if uploaded_file is not None:
@@ -133,12 +221,15 @@ def load_data(uploaded_file, default_path="sample_data.csv"):
             else:
                 st.error("Unsupported file format!")
                 return None
-            return df
+            df.columns = [clean_column_name(col) for col in df.columns]
+            return drop_geo_columns(df)
         except Exception as e:
             st.error(f"Error loading file: {e}")
             return None
     elif os.path.exists(default_path):
-        return pd.read_csv(default_path)
+        df = pd.read_csv(default_path)
+        df.columns = [clean_column_name(col) for col in df.columns]
+        return drop_geo_columns(df)
     else:
         # Fallback inline demo dataset
         data = {
@@ -152,7 +243,9 @@ def load_data(uploaded_file, default_path="sample_data.csv"):
             'sea_level': np.random.normal(0.3, 0.08, 72).round(2),
             'climate_category': np.random.choice(['Hot', 'Temperate', 'Tropical'], 72)
         }
-        return pd.DataFrame(data)
+        df = pd.DataFrame(data)
+        df.columns = [clean_column_name(col) for col in df.columns]
+        return drop_geo_columns(df)
 
 # ==========================================
 # SIDEBAR CONTROLS
@@ -315,7 +408,7 @@ with tab_eda:
             st.success("🎉 Excellent! Your dataset has zero missing values.")
         else:
             fig_null = px.imshow(df.isnull(), labels=dict(x="Columns", y="Rows", color="Is Null"),
-                                 color_continuous_scale=["#1e293b", "#ef4444"], title="Missing Value Distribution")
+                                 color_continuous_scale=["#edf7f0", "#2e7d5d"], title="Missing Value Distribution")
             fig_null.update_layout(template="plotly_dark", height=350)
             st.plotly_chart(fig_null, width="stretch")
             
@@ -393,19 +486,23 @@ with tab_viz:
             enable_ma = st.checkbox("Show 3-Period Moving Average", value=True)
             
         with ts_col1:
+            eco_palette = ["#2E7D5D", "#7CBF9E", "#4DB6AC", "#F0B24A", "#8BC34A", "#1E9D8A"]
             if color_group:
                 fig_ts = px.line(df, x=x_time, y=y_trend_col, color=color_group, markers=True,
-                                 title=f"{y_trend_col.replace('_', ' ').title()} over {x_time.title()} by {color_group.title()}")
+                                 title=f"{y_trend_col.replace('_', ' ').title()} over {x_time.title()} by {color_group.title()}",
+                                 color_discrete_sequence=eco_palette)
             else:
                 fig_ts = px.line(df, x=x_time, y=y_trend_col, markers=True,
-                                 title=f"{y_trend_col.replace('_', ' ').title()} Trend over {x_time.title()}")
+                                 title=f"{y_trend_col.replace('_', ' ').title()} Trend over {x_time.title()}",
+                                 color_discrete_sequence=["#2E7D5D"])
                 if enable_ma:
                     df_sorted = df.sort_values(by=x_time)
                     ma_series = df_sorted[y_trend_col].rolling(window=3).mean()
-                    fig_ts.add_scatter(x=df_sorted[x_time], y=ma_series, name="3-Period Moving Avg", line=dict(dash='dash', color='#f59e0b'))
+                    fig_ts.add_scatter(x=df_sorted[x_time], y=ma_series, name="3-Period Moving Avg", line=dict(dash='dash', color='#D6A64D', width=3))
             
-            fig_ts.update_layout(template="plotly_dark", height=420)
-            st.plotly_chart(fig_ts, use_container_width=True)
+            fig_ts.update_layout(template="plotly_white", height=420, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                 font=dict(color="#18332a"), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+            st.plotly_chart(fig_ts, width="stretch")
             
         st.divider()
         
@@ -416,10 +513,11 @@ with tab_viz:
         with corr_col1:
             st.markdown("##### Interactive Plotly Correlation Heatmap")
             corr_matrix = df[numeric_columns].corr().round(2)
-            fig_corr = px.imshow(corr_matrix, text_auto=True, color_continuous_scale="Viridis",
-                                 title="Plotly Correlation Heatmap")
-            fig_corr.update_layout(template="plotly_dark", height=400)
-            st.plotly_chart(fig_corr, use_container_width=True)
+            fig_corr = px.imshow(corr_matrix, text_auto=True, color_continuous_scale=[[0, '#edf7ef'], [0.5, '#8fd0af'], [1, '#2e7d5d']],
+                                 title="Variable Relationship Heatmap")
+            fig_corr.update_layout(template="plotly_white", height=400, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                 font=dict(color="#18332a"))
+            st.plotly_chart(fig_corr, width="stretch")
             
         with corr_col2:
             st.markdown("##### High-Res Seaborn Correlation Matrix")
@@ -441,18 +539,22 @@ with tab_viz:
         with dist_col1:
             selected_dist = st.selectbox("Select Variable for Histogram & KDE:", numeric_columns, index=0)
             fig_hist = px.histogram(df, x=selected_dist, marginal="box", color=color_group if color_group else None,
-                                    title=f"Distribution of {selected_dist.title()}")
-            fig_hist.update_layout(template="plotly_dark", height=380)
-            st.plotly_chart(fig_hist, use_container_width=True)
+                                    title=f"Distribution of {selected_dist.title()}",
+                                    color_discrete_sequence=["#2E7D5D", "#4DB6AC", "#F0B24A", "#8BBF9F"])
+            fig_hist.update_layout(template="plotly_white", height=380, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                 font=dict(color="#18332a"))
+            st.plotly_chart(fig_hist, width="stretch")
             
         with dist_col2:
             if categorical_columns:
                 cat_var = st.selectbox("Categorical Group for Boxplot:", categorical_columns, index=0)
                 selected_box = st.selectbox("Select Variable for Boxplot:", numeric_columns, index=1 if len(numeric_columns)>1 else 0)
                 fig_box = px.box(df, x=cat_var, y=selected_box, color=cat_var, points="all",
-                                 title=f"Boxplot of {selected_box.title()} by {cat_var.title()}")
-                fig_box.update_layout(template="plotly_dark", height=380)
-                st.plotly_chart(fig_box, use_container_width=True)
+                                 title=f"Boxplot of {selected_box.title()} by {cat_var.title()}",
+                                 color_discrete_sequence=["#2E7D5D", "#4DB6AC", "#D6A64D", "#8BC34A"])
+                fig_box.update_layout(template="plotly_white", height=380, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                 font=dict(color="#18332a"))
+                st.plotly_chart(fig_box, width="stretch")
             else:
                 st.info("No categorical columns available for grouping boxplots.")
 
@@ -466,9 +568,11 @@ with tab_viz:
             val_map_col = st.selectbox("Select Map Color Variable:", numeric_columns)
             fig_map = px.scatter_geo(df, lat=lat_col, lon=lon_col, color=val_map_col,
                                      hover_name=df.columns[0], size=val_map_col if (df[val_map_col] > 0).all() else None,
-                                     projection="natural earth", title=f"Geographic Mapping of {val_map_col}")
-            fig_map.update_layout(template="plotly_dark", height=450)
-            st.plotly_chart(fig_map, use_container_width=True)
+                                     projection="natural earth", title=f"Geographic Mapping of {val_map_col}",
+                                     color_continuous_scale=[[0, '#edf7ef'], [0.5, '#9ad5b6'], [1, '#2e7d5d']])
+            fig_map.update_layout(template="plotly_white", height=450, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                 font=dict(color="#18332a"))
+            st.plotly_chart(fig_map, width="stretch")
 
 # ------------------------------------------
 # TAB 4: CUSTOM CHART BUILDER
@@ -514,8 +618,9 @@ with tab_custom:
             z_var = st.selectbox("Z-Axis Variable for 3D:", numeric_columns, index=min(2, len(numeric_columns)-1))
             fig_custom = px.scatter_3d(df, x=x_var, y=y_var, z=z_var, color=c_var, title=plot_title)
             
-        fig_custom.update_layout(template="plotly_dark", height=550)
-        st.plotly_chart(fig_custom, use_container_width=True)
+        fig_custom.update_layout(template="plotly_white", height=550, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                font=dict(color="#18332a"), legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+        st.plotly_chart(fig_custom, width="stretch")
     except Exception as e:
         st.error(f"Could not render chart with selected parameters: {e}")
 
@@ -569,10 +674,12 @@ with tab_ml:
             })
             
             fig_ml = go.Figure()
-            fig_ml.add_trace(go.Scatter(x=df_hist[feature_x], y=df_hist[target_y], mode='lines+markers', name='Historical Data', line=dict(color='#38bdf8', width=3)))
-            fig_ml.add_trace(go.Scatter(x=df_future[feature_x], y=df_future[target_y], mode='lines+markers', name='Linear Forecast', line=dict(color='#f43f5e', width=3, dash='dash')))
-            fig_ml.update_layout(title=f"Predictive Trend for {target_y.title()} over {feature_x.title()}", template="plotly_dark", height=450)
-            st.plotly_chart(fig_ml, use_container_width=True)
+            fig_ml.add_trace(go.Scatter(x=df_hist[feature_x], y=df_hist[target_y], mode='lines+markers', name='Historical Data', line=dict(color='#2E7D5D', width=3)))
+            fig_ml.add_trace(go.Scatter(x=df_future[feature_x], y=df_future[target_y], mode='lines+markers', name='Linear Forecast', line=dict(color='#D6A64D', width=3, dash='dash')))
+            fig_ml.update_layout(title=f"Predictive Trend for {target_y.title()} over {feature_x.title()}", template="plotly_white",
+                                height=450, paper_bgcolor="#f8fbf8", plot_bgcolor="#f8fbf8",
+                                font=dict(color="#18332a"))
+            st.plotly_chart(fig_ml, width="stretch")
             
         st.divider()
         st.markdown("##### 🚨 Operational Weather Hazard Alert Thresholds")
@@ -627,7 +734,7 @@ with tab_export:
             data=csv_buffer,
             file_name="processed_weather_dataset.csv",
             mime="text/csv",
-            use_container_width=True
+            width="stretch"
         )
         
     with exp_col2:
@@ -642,7 +749,7 @@ with tab_export:
                 data=excel_data,
                 file_name="processed_weather_dataset.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True
+                width="stretch"
             )
         except Exception as e:
             st.error(f"Excel export unavailable: {e}. Please ensure 'openpyxl' is installed.")
